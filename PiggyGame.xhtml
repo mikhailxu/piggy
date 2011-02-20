@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Piggy Game</title>
+<style type="text/css" media="screen">
+img {
+  position: absolute;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+<![CDATA[
+addEventListener("load", piggyLoad, false);
+
+function loadVariables(){
+    coin1 = document.getElementById('coin1');
+    coin2 = document.getElementById('coin2');
+    piggy = document.getElementById('the-pig');
+    score = document.getElementById('score');
+}
+
+//register key listener with document object
+document.onkeydown = keyListener;
+
+function keyListener(e){
+   if(!e){
+      //for IE
+      e = window.event;
+   }
+   if(e.keyCode==37 && piggyleft > 0){
+      //keyCode 37 is left arrow
+      piggyleft -= 8;
+      piggy.style.left = piggyleft + 'px';
+      console.log("left");
+   }
+   if(e.keyCode==39 && piggyleft < 436){
+      //keyCode 39 is right arrow
+      piggyleft += 8;
+      piggy.style.left = piggyleft + 'px';
+      console.log("right");
+   }
+   // FYI - keyCode 38 is up arrow, 
+   //       keyCode 40 is down arrow
+}
+
+function piggyLoad()
+{
+    setInterval(coinMove, 5);
+    setInterval(inSlot, 5);
+}
+function coinMove()
+
+{
+  var coins = document.querySelectorAll(".coin");
+  for (var i = 0 ; i < coins.length; i++)
+  {
+    var coin = coins[i];
+    var newTop = (coin.offsetTop + 2);
+    if (newTop > 460)
+    {
+      newTop = 0;
+      coin.style.left = (10 + Math.floor(Math.random() * 260)) + "px";
+      coin.style.opacity = 1;
+    coin1hitpig = 0;
+    coin2hitpig = 0;
+     }
+    coin.style.top = newTop + "px";
+  }
+}
+function updateScore(){
+   currentScore += 5;
+   score.innerHTML = 'Score: ' + currentScore;
+}
+
+function inSlot()
+{
+
+coinLeft = parseInt(coin1.style.left);
+coinTop = parseInt(coin1.style.top);
+coinLeft2 = parseInt(coin2.style.left);
+coinTop2 = parseInt(coin2.style.top);
+
+if(coinTop > 400 && coinTop < 472 && coin1hitpig == 0){
+      if(coinLeft > piggyleft && coinLeft < piggyleft + 75)
+            fade('coin1');
+            coin1hitpig = 1;
+    };
+if(coinTop2 > 400 && coinTop < 472 && coin2hitpig == 0){
+      if(coinLeft2 > piggyleft && coinLeft2 < piggyleft + 75)
+            fade('coin2');
+            coin2hitpig = 1;
+    };
+
+}
+
+function fade(eid)
+{
+  var element = document.getElementById(eid);
+  if(element == null)
+    return;
+   
+  if(element.FadeState == null)
+  {
+    if(element.style.opacity == null 
+        || element.style.opacity == '' 
+        || element.style.opacity == '1')
+    {
+      element.FadeState = 2;
+    }
+    else
+    {
+      element.FadeState = -2;
+    }
+  }
+    
+  if(element.FadeState == 1 || element.FadeState == -1)
+  {
+    element.FadeState = element.FadeState == 1 ? -1 : 1;
+    element.FadeTimeLeft = TimeToFade - element.FadeTimeLeft;
+  }
+  else
+  {
+    element.FadeState = element.FadeState == 2 ? -1 : 1;
+    element.FadeTimeLeft = TimeToFade;
+    setTimeout("animateFade(" + new Date().getTime() + ",'" + eid + "')", 30);
+  }
+}
+
+function animateFade(lastTick, eid)
+{  
+  var curTick = new Date().getTime();
+  var elapsedTicks = curTick - lastTick;
+  updateScore();
+  console.log("animatefade");
+  
+  var element = document.getElementById(eid);
+ 
+  if(element.FadeTimeLeft <= elapsedTicks)
+  {
+    element.style.opacity = element.FadeState == 2 ? '1' : '0';
+    element.style.filter = 'alpha(opacity = ' 
+    + (element.FadeState == 1 ? '100' : '0') + ')';
+    element.FadeState = element.FadeState == 1 ? 2 : -2;
+    return;
+    }
+ 
+  element.FadeTimeLeft -= elapsedTicks;
+  var newOpVal = element.FadeTimeLeft/TimeToFade;
+  if(element.FadeState == 1)
+    newOpVal = 1 - newOpVal;
+
+  element.style.opacity = newOpVal;
+  element.style.filter = 'alpha(opacity = ' + (newOpVal*100) + ')';
+  
+  setTimeout("animateFade(" + curTick + ",'" + eid + "')", 30);
+}
+
+]]>
+</script>
+
+</head>
+<body onLoad="init()" style="background-color: lightblue">
+  <img id="coin1" class="coin" style="top: 0px; left: 120px; opacity: 1;" src="coin.png" />
+  <img id="coin2" class="coin" style="top: 200px; left: 240p; opacity: 1;" src="coin.png" />
+  <img id="the-pig" style="top: 400px; left: 120px" src="testPig.png" />
+<div style = "font-family:'Comic Sans MS'; color:#F873CD;" id="score">
+        Score: 0
+</div>
+
+<script>
+var coin1hitpig = 0;
+var coin2hitpig = 0;
+var TimeToFade = 10;
+var piggyleft = 120;
+var currentScore = 0;
+var coinLeft;
+var coinTop;
+var coin2Left;
+var coin2Top;
+
+loadVariables();
+</script>
+</body>
+</html>
