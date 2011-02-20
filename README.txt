@@ -1,12 +1,12 @@
 .1
-falling coins
-pig
-main game loop
+-falling coins
+-pig
+-main game loop
 
 .2
-score
-pig moves
-secondary game loop (for experiments)
+-score
+-pig moves
+-secondary game loop (for experiments)
 
 .3
 drag n drop piggy
