@@ -160,8 +160,8 @@ function animateFade(lastTick, eid)
 
 </head>
 <body onLoad="init()" style="background-color: lightblue">
-  <img id="coin1" class="coin" style="top: 0px; left: 120px; opacity: 1;" src="coin.png" />
-  <img id="coin2" class="coin" style="top: 200px; left: 240p; opacity: 1;" src="coin.png" />
+  <img id="coin1" class="coin" style="z-index:10; top: 0px; left: 120px; opacity: 1;" src="coin.png" />
+  <img id="coin2" class="coin" style="z-index:10; top: 200px; left: 240p; opacity: 1;" src="coin.png" />
   <img id="the-pig" style="top: 400px; left: 120px" src="testPig.png" />
 <div style = "font-family:'Comic Sans MS'; color:#F873CD;" id="score">
         Score: 0
@@ -170,7 +170,7 @@ function animateFade(lastTick, eid)
 <script>
 var coin1hitpig = 0;
 var coin2hitpig = 0;
-var TimeToFade = 10;
+var TimeToFade = 150;
 var piggyleft = 120;
 var currentScore = 0;
 var coinLeft;
