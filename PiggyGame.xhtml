@@ -45,8 +45,8 @@ function keyListener(e){
 
 function piggyLoad()
 {
-    setInterval(coinMove, 5);
-    setInterval(inSlot, 5);
+    setInterval(coinMove, 10);
+    setInterval(inSlot, 10);
 }
 function coinMove()
 
@@ -55,7 +55,7 @@ function coinMove()
   for (var i = 0 ; i < coins.length; i++)
   {
     var coin = coins[i];
-    var newTop = (coin.offsetTop + 2);
+    var newTop = (coin.offsetTop + 4);
     if (newTop > 460)
     {
       newTop = 0;
