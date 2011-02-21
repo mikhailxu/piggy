@@ -83,12 +83,14 @@ coinTop2 = parseInt(coin2.style.top);
 if(coinTop > 400 && coinTop < 480 && coin1hitpig == 0){
       if(coinLeft > piggyleft && coinLeft < piggyleft + 75)
             fade('coin1');
-            coin1hitpig = 1;
+      coin1hitpig = 1;
+        updateScore();
     };
 if(coinTop2 > 400 && coinTop < 480 && coin2hitpig == 0){
       if(coinLeft2 > piggyleft && coinLeft2 < piggyleft + 75)
             fade('coin2');
-            coin2hitpig = 1;
+      coin2hitpig = 1;
+        updateScore();
     };
 
 }
@@ -130,8 +132,6 @@ function animateFade(lastTick, eid)
 {  
   var curTick = new Date().getTime();
   var elapsedTicks = curTick - lastTick;
-  updateScore();
-  console.log("animatefade");
   
   var element = document.getElementById(eid);
  
